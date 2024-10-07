@@ -1,0 +1,13 @@
+APScheduler==3.10.4
+eth_account==0.11.2
+fastapi==0.111.0
+pydantic==1.10.4
+Requests==2.32.3
+tno.mpc.communication==4.8.1
+tno.mpc.encryption_schemes.paillier==3.0.1
+tno.mpc.encryption_schemes.shamir==1.1.0
+tno.mpc.encryption_schemes.templates==4.1.2
+tno.mpc.encryption_schemes.utils==0.11.1
+tno.mpc.protocols.distributed_keygen==4.0.0
+uvicorn==0.30.1
+web3==6.19.0
