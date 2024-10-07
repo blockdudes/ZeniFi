@@ -35,13 +35,17 @@ import { leverage_public_key, mint_public_key, user_token_ATA, vault_token_ATA, 
 
 
 const FormButtons = () => {
-  const [activeForm, setActiveForm] = useState("deposit");
+  const [activeForm, setActiveForm] = useState("");
   const [tokenAddress, setTokenAddress] = useState(null);
   const [amount, setAmount] = useState(null);
   const [success, setSuccess] = useState(false);
   const dispatch = useDispatch();
   const { publicKey, sendTransaction } = useWallet();
-
+  const [loadingDeposit, setLoadingDeposit] = useState(false);
+  const [loadingWithdraw, setLoadingWithdraw] = useState(false);
+  const [loadingBorrow, setLoadingBorrow] = useState(false);
+  const [loadingRepay, setLoadingRepay] = useState(false);
+  const [loadingGetUsdc, setLoadingGetUsdc] = useState(false);
 
   const handleButtonClick = (formName) => {
     setActiveForm(formName);
@@ -71,13 +75,12 @@ const FormButtons = () => {
   const levrageAccount = getKeypairFromSecretKey(process.env.NEXT_PUBLIC_LEVERAGE_SECRET_KEY)
   const mintInfoKeypair = getKeypairFromSecretKey(process.env.NEXT_PUBLIC_MINT_INFO_SECRET_KEY)
 
-  
-console.log(mintKeypair.publicKey.toString())
+
   useEffect(() => {
     handleGetBalance()
   }, [wallet, leverageProgramId])
 
-  const handleGetBalance = async() => {
+  const handleGetBalance = async () => {
     try {
 
       if (!wallet || !wallet.publicKey) {
@@ -88,39 +91,40 @@ console.log(mintKeypair.publicKey.toString())
       const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer()], leverageProgramId);
 
       const userBalance = await new_program.account.userBalance.fetch(new PublicKey(pda[0]));
-      console.log({native: userBalance.nativeBalance, fungible: userBalance.fungibleBalance})
-      dispatch(addBalance({native: userBalance.nativeBalance, fungible: userBalance.fungibleBalance}))
+      console.log({ native: userBalance.nativeBalance, fungible: userBalance.fungibleBalance })
+      dispatch(addBalance({ native: userBalance.nativeBalance, fungible: userBalance.fungibleBalance }))
     } catch (error) {
       console.log(error)
     }
   }
 
-  const handleGetOrders = async() => {
+  const handleGetOrders = async () => {
     try {
 
       if (!wallet || !wallet.publicKey) {
         console.error("Wallet or wallet.publicKey is undefined.");
         return;
       }
+
       const new_program = new Program(leverageIdl, provider);
       // const pda = PublicKey.findProgramAddressSync([Buffer wallet.publicKey.toBuffer()], leverageProgramId);
 
       // const userBalance = await new_program.account.userBalance.fetch(new PublicKey(pda[0]));
       const userBalance = await new_program.account.getUserOrderState.fetch(new PublicKey(pda[0]));
-      dispatch(addBalance({native: userBalance.nativeBalance, fungible: userBalance.fungibleBalance}))
+      dispatch(addBalance({ native: userBalance.nativeBalance, fungible: userBalance.fungibleBalance }))
     } catch (error) {
       console.log(error)
     }
   }
-  
-  const handleGetUsdc = async() => {
+
+  const handleGetUsdc = async () => {
     try {
 
       if (!wallet || !wallet.publicKey) {
         console.error("Wallet or wallet.publicKey is undefined.");
         return;
       }
-
+      setLoadingGetUsdc(true);
       const program = new Program(tokenIdl, provider);
       const newMintKeypair = new solanaWeb3.Keypair();
       console.log(mintKeypair, newMintKeypair)
@@ -128,25 +132,25 @@ console.log(mintKeypair.publicKey.toString())
       let localUserTokenAccount = localStorage.getItem('userTokenAccount') && new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount')))
       if (!localUserTokenAccount) {
 
-       
-      // const mintRent = await connection.getMinimumBalanceForRentExemption(MINT_SIZE);
-      // const createMintInfoIx = web3.SystemProgram.createAccount({
-      //   fromPubkey: wallet.publicKey,
-      //   newAccountPubkey: mintKeypair.publicKey,
-      //   space: MINT_SIZE,
-      //   lamports: mintRent,
-      //   programId: TOKEN_PROGRAM_ID,  // Ensure this is the correct program ID
-      // });
 
-      // const initializeMint_Tx = await createInitializeMintInstruction(
-      //   mintKeypair.publicKey,
-      //   9,
-      //   wallet.publicKey,
-      //   wallet.publicKey,
-      // );
+        // const mintRent = await connection.getMinimumBalanceForRentExemption(MINT_SIZE);
+        // const createMintInfoIx = web3.SystemProgram.createAccount({
+        //   fromPubkey: wallet.publicKey,
+        //   newAccountPubkey: mintKeypair.publicKey,
+        //   space: MINT_SIZE,
+        //   lamports: mintRent,
+        //   programId: TOKEN_PROGRAM_ID,  // Ensure this is the correct program ID
+        // });
 
-      // const transaction = new web3.Transaction().add(createMintInfoIx, initializeMint_Tx)
-      // const signature = await provider.sendAndConfirm(transaction, [mintKeypair]);
+        // const initializeMint_Tx = await createInitializeMintInstruction(
+        //   mintKeypair.publicKey,
+        //   9,
+        //   wallet.publicKey,
+        //   wallet.publicKey,
+        // );
+
+        // const transaction = new web3.Transaction().add(createMintInfoIx, initializeMint_Tx)
+        // const signature = await provider.sendAndConfirm(transaction, [mintKeypair]);
 
         // Ensure the userTokenAccount is writable
         const userTokenAccount = await getAssociatedTokenAddress(
@@ -173,18 +177,22 @@ console.log(mintKeypair.publicKey.toString())
       // console.log("minting")
 
       const mintToUserIx = await program.methods.mintTokens(new BN(1000000000000000))
-      .accounts({
-        user: keypair.publicKey,
-        mint: mintKeypair.publicKey,
-        tokenProgram: TOKEN_PROGRAM_ID,
-        tokenAccount: localUserTokenAccount,
-      })
-      .signers([keypair])
-      .rpc();
+        .accounts({
+          user: keypair.publicKey,
+          mint: mintKeypair.publicKey,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          tokenAccount: localUserTokenAccount,
+        })
+        .signers([keypair])
+        .rpc();
 
     } catch (error) {
-      console.log(error)
+      toast.error(error.message)
+      throw error;
+    } finally {
+      setLoadingGetUsdc(false);
     }
+
   }
 
   const handleMint = useCallback(async (amount) => {
@@ -350,12 +358,12 @@ console.log(mintKeypair.publicKey.toString())
         levrageAccount.publicKey,
         mintKeypair.publicKey       // mint
       );
-    
+
       const vault_transaction = new web3.Transaction().add(
         createVaultAtaIx,
       );
 
-    
+
       // Sign and send the transaction
       const vault_signature = await provider.sendAndConfirm(vault_transaction);
       console.log("vault ATA address:", vaultTokenAccount.toString());
@@ -418,20 +426,26 @@ console.log(mintKeypair.publicKey.toString())
   const handleDeposit = useCallback(async () => {
     try {
       if (!wallet || !wallet.publicKey) {
-        console.error("Wallet or wallet.publicKey is undefined.");
+        toast.error("Please connect your wallet.");
         return;
       }
+
+      if (!amount || !tokenAddress) {
+        toast.error("Please enter an amount and select a token.");
+        return;
+      }
+      setLoadingDeposit(true);
       const program = new Program(leverageIdl, provider);
       // const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer(), Buffer.from(version)], leverageProgramId);
       const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer()], leverageProgramId);
 
       if (tokenAddress === "SOL") {
-        const tx = await program.methods.deposit(new BN(amount * (10**9)))
-        .accounts({
-          user: wallet.publicKey,
-          leverageAccount: new PublicKey(leverage_public_key),
-          userBalance: new PublicKey(pda[0]),
-          systemProgram: solanaWeb3.SystemProgram.programId,
+        const tx = await program.methods.deposit(new BN(amount * (10 ** 9)))
+          .accounts({
+            user: wallet.publicKey,
+            leverageAccount: new PublicKey(leverage_public_key),
+            userBalance: new PublicKey(pda[0]),
+            systemProgram: solanaWeb3.SystemProgram.programId,
           })
           .rpc();
       }
@@ -439,7 +453,7 @@ console.log(mintKeypair.publicKey.toString())
 
         let localUserTokenAccount = localStorage.getItem('userTokenAccount') && new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount')))
         if (!localUserTokenAccount) {
-  
+
           console.log(object)
           const mintRent = await connection.getMinimumBalanceForRentExemption(82);
           const tx = new Transaction();
@@ -451,7 +465,7 @@ console.log(mintKeypair.publicKey.toString())
             lamports: mintRent,
             programId: TOKEN_PROGRAM_ID,  // Ensure this is the correct program ID
           });
-  
+
           console.log(createMintAccountIx)
           // Initialize mint instruction
           const initializeMintIx = await createInitializeMintInstruction(
@@ -461,361 +475,232 @@ console.log(mintKeypair.publicKey.toString())
             wallet.publicKey,
             TOKEN_PROGRAM_ID
           );
-  
+
           // Ensure the userTokenAccount is writable
           const userTokenAccount = await getAssociatedTokenAddress(
             mintKeypair.publicKey,
             wallet.publicKey
           );
-  
-  
+
+
           const createAtaIx = createAssociatedTokenAccountInstruction(
             wallet.publicKey,  // payer
             userTokenAccount,           // ata
             wallet.publicKey,  // owner
             mintKeypair.publicKey       // mint
           );
-  
-  
+
+
           tx.add(createMintAccountIx, initializeMintIx, createAtaIx)
           const send = await provider.sendAndConfirm(tx, [mintKeypair])
-  
+
           localUserTokenAccount = userTokenAccount;
           localStorage.setItem('userTokenAccount', JSON.stringify(userTokenAccount))
         }
 
-        const deposit_tx = await program.methods.depositErc20(new BN(amount * (10**9)))
-        .accounts({
-          user: wallet.publicKey,
-          leverageAccount: levrageAccount.publicKey,
-          userBalance: new PublicKey(pda[0]),
-          tokenMint: mintKeypair.publicKey,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          userTokenAccount: localUserTokenAccount,
-          vaultTokenAccount: new PublicKey(vault_token_ATA),
-          systemProgram: solanaWeb3.SystemProgram.programId,
-        })
-        .rpc();
+        const deposit_tx = await program.methods.depositErc20(new BN(amount * (10 ** 9)))
+          .accounts({
+            user: wallet.publicKey,
+            leverageAccount: levrageAccount.publicKey,
+            userBalance: new PublicKey(pda[0]),
+            tokenMint: mintKeypair.publicKey,
+            tokenProgram: TOKEN_PROGRAM_ID,
+            userTokenAccount: localUserTokenAccount,
+            vaultTokenAccount: new PublicKey(vault_token_ATA),
+            systemProgram: solanaWeb3.SystemProgram.programId,
+          })
+          .rpc();
 
       } else {
         throw new Error("Invalid token address");
       }
-
+      await handleGetBalance();
     } catch (error) {
+      toast.error(error.message)
       throw error;
+    } finally {
+      setLoadingDeposit(false);
+      setAmount(null)
+    setTokenAddress(null)
     }
   }, [wallet, programId]);
 
-  // const handleDepositToken = useCallback(async () => {
-  //   try {
-  //     if (!wallet || !wallet.publicKey) {
-  //       console.error("Wallet or wallet.publicKey is undefined.");
-  //       return;
-  //     }
-  //     const program = new Program(leverageIdl, provider);
-  //     let tx = new Transaction();
-
-  //     // let localUserTokenAccount = localStorage.getItem('userTokenAccount') && new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount')))
-  //     // console.log('localUserTokenAccount', localUserTokenAccount)
-  //     // if (!localUserTokenAccount) {
-  //     //   console.log("creating new mint")
-  //     //   const mintKeypair = new solanaWeb3.Keypair();
-
-  //     //   const mintRent = await connection.getMinimumBalanceForRentExemption(82);
-
-  //     //   console.log(mintRent)
-  //     //   const createMintAccountIx = web3.SystemProgram.createAccount({
-  //     //     fromPubkey: wallet.publicKey,
-  //     //     newAccountPubkey: mintKeypair.publicKey,
-  //     //     space: 82,
-  //     //     lamports: mintRent,
-  //     //     programId: TOKEN_PROGRAM_ID,  // Ensure this is the correct program ID
-  //     //   });
-
-  //     //   console.log(createMintAccountIx)
-  //     //   // Initialize mint instruction
-  //     //   const initializeMintIx = await createInitializeMintInstruction(
-  //     //     mintKeypair.publicKey,
-  //     //     0,
-  //     //     wallet.publicKey,
-  //     //     wallet.publicKey,
-  //     //     TOKEN_PROGRAM_ID
-  //     //   );
-
-  //     //   console.log(initializeMintIx)
-
-  //     //   // Ensure the userTokenAccount is writable
-  //     //   const userTokenAccount = await getAssociatedTokenAddress(
-  //     //     mintKeypair.publicKey,
-  //     //     wallet.publicKey
-  //     //   );
-
-  //     //   console.log(userTokenAccount)
-
-  //     //   const createAtaIx = createAssociatedTokenAccountInstruction(
-  //     //     wallet.publicKey,  // payer
-  //     //     userTokenAccount,           // ata
-  //     //     wallet.publicKey,  // owner
-  //     //     mintKeypair.publicKey       // mint
-  //     //   );
-
-  //     //   console.log(createAtaIx)
-
-  //     //   tx.add(createMintAccountIx, initializeMintIx, createAtaIx)
-  //     //   const send = await provider.sendAndConfirm(tx, [mintKeypair])
-
-  //     //   localUserTokenAccount = userTokenAccount;
-  //     //   localStorage.setItem('userTokenAccount', JSON.stringify(userTokenAccount))
-  //     // }
-
-  //     const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer()], leverageProgramId);
-
-  //     console.log(pda[0].toString())
-
-  //     const deposit_tx = await program.methods.depositErc20(new BN(100))
-  //       .accounts({
-  //         user: wallet.publicKey,
-  //         leverageAccount: levrageAccount.publicKey,
-  //         userBalance: new PublicKey(pda[0]),
-  //         tokenMint: mintKeypair.publicKey,
-  //         tokenProgram: TOKEN_PROGRAM_ID,
-  //         userTokenAccount: new PublicKey(user_token_ATA),
-  //         vaultTokenAccount: new PublicKey(vault_token_ATA),
-  //         systemProgram: solanaWeb3.SystemProgram.programId,
-  //       })
-  //       .rpc();
-
-  //     console.log(deposit_tx)
-
-  //   } catch (error) {
-  //     console.log("error::::", error)
-  //   }
-  // }, [wallet, leverageProgramId])
 
   const handleWithdraw = useCallback(async () => {
     try {
       if (!wallet || !wallet.publicKey) {
-        console.error("Wallet or wallet.publicKey is undefined.");
+        toast.error("Please connect your wallet.");
         return;
       }
+
+      if (!amount || !tokenAddress) {
+        toast.error("Please enter an amount and select a token.");
+        return;
+      }
+      setLoadingWithdraw(true);
       const program = new Program(leverageIdl, provider);
       const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer()], leverageProgramId);
 
       if (tokenAddress === "SOL") {
-        const withdraw_tx = await program.methods.withdraw(new BN(amount * (10**9)))
-        .accounts({
-          user: wallet.publicKey,
-          leverageAccount: levrageAccount.publicKey,
-          userBalance: new PublicKey(pda[0]),
-          tokenProgram: null,
-          tokenMint: null,
-          vaultTokenAccount: null,
-          userTokenAccount: null,
-          systemProgram: solanaWeb3.SystemProgram.programId,
-        })
-        .rpc();
+        const withdraw_tx = await program.methods.withdraw(new BN(amount * (10 ** 9)))
+          .accounts({
+            user: wallet.publicKey,
+            leverageAccount: levrageAccount.publicKey,
+            userBalance: new PublicKey(pda[0]),
+            tokenProgram: null,
+            tokenMint: null,
+            vaultTokenAccount: null,
+            userTokenAccount: null,
+            systemProgram: solanaWeb3.SystemProgram.programId,
+          })
+          .rpc();
       }
       else if (tokenAddress === "USDC") {
-        const withdraw_tx = await program.methods.withdraw(new BN(amount * (10**9)))
-        .accounts({
-          user: wallet.publicKey,
-          leverageAccount: levrageAccount.publicKey,
-          userBalance: new PublicKey(pda[0]),
-          tokenMint: mintKeypair.publicKey,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount'))),
-          vaultTokenAccount: new PublicKey(vault_token_ATA),
-          systemProgram: solanaWeb3.SystemProgram.programId,
-        })
-        .rpc();
+        const withdraw_tx = await program.methods.withdraw(new BN(amount * (10 ** 9)))
+          .accounts({
+            user: wallet.publicKey,
+            leverageAccount: levrageAccount.publicKey,
+            userBalance: new PublicKey(pda[0]),
+            tokenMint: mintKeypair.publicKey,
+            tokenProgram: TOKEN_PROGRAM_ID,
+            userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount'))),
+            vaultTokenAccount: new PublicKey(vault_token_ATA),
+            systemProgram: solanaWeb3.SystemProgram.programId,
+          })
+          .rpc();
       }
-      else {throw new Error("Invalid token address")}
-
+      else { throw new Error("Invalid token address") }
+      await handleGetBalance();
     } catch (error) {
+      toast.error(error.message)
       throw error;
+    } finally {
+      setLoadingWithdraw(false);
+      setAmount(null)
+      setTokenAddress(null)
     }
   }, [wallet, leverageProgramId])
 
   const handleBorrow = useCallback(async () => {
     try {
       if (!wallet || !wallet.publicKey) {
-        console.error("Wallet or wallet.publicKey is undefined.");
+        toast.error("Please connect your wallet.");
         return;
       }
+
+      if (!amount || !tokenAddress) {
+        toast.error("Please enter an amount and select a token.");
+        return;
+      }
+      setLoadingBorrow(true);
       const program = new Program(leverageIdl, provider);
       const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer()], leverageProgramId);
 
       if (tokenAddress === "SOL") {
-        const borrow_tx = await program.methods.borrow(new BN(amount * (10**9)))
-        .accounts({
-          user: wallet.publicKey,
-          leverageAccount: new PublicKey(leverage_public_key),
-          userBalance: new PublicKey(pda[0]),
-          tokenProgram: null,
-          tokenMint: null,
-          vaultTokenAccount: null,
-          userTokenAccount: null,
-          systemProgram: solanaWeb3.SystemProgram.programId,
-        })
-        .rpc();
+        const borrow_tx = await program.methods.borrow(new BN(amount * (10 ** 9)))
+          .accounts({
+            user: wallet.publicKey,
+            leverageAccount: new PublicKey(leverage_public_key),
+            userBalance: new PublicKey(pda[0]),
+            tokenProgram: null,
+            tokenMint: null,
+            vaultTokenAccount: null,
+            userTokenAccount: null,
+            systemProgram: solanaWeb3.SystemProgram.programId,
+          })
+          .rpc();
       }
       else if (tokenAddress === "USDC") {
-        const borrow_tx = await program.methods.borrow(new BN(amount * (10**9)))
-        .accounts({
-          user: wallet.publicKey,
-          leverageAccount: levrageAccount.publicKey,
-          userBalance: new PublicKey(pda[0]),
-          tokenMint: mintKeypair.publicKey,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount'))),
-          vaultTokenAccount: new PublicKey(vault_token_ATA),
-          systemProgram: solanaWeb3.SystemProgram.programId,
-        })
-        .rpc();
+        const borrow_tx = await program.methods.borrow(new BN(amount * (10 ** 9)))
+          .accounts({
+            user: wallet.publicKey,
+            leverageAccount: levrageAccount.publicKey,
+            userBalance: new PublicKey(pda[0]),
+            tokenMint: mintKeypair.publicKey,
+            tokenProgram: TOKEN_PROGRAM_ID,
+            userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount'))),
+            vaultTokenAccount: new PublicKey(vault_token_ATA),
+            systemProgram: solanaWeb3.SystemProgram.programId,
+          })
+          .rpc();
       }
-      else {throw new Error("Invalid token address")}
-
+      else { throw new Error("Invalid token address") }
+      await handleGetBalance();
     } catch (error) {
+      toast.error(error.message)
       throw error;
+    } finally {
+      setLoadingBorrow(false);
+      setAmount(null)
+      setTokenAddress(null)
     }
   }, [wallet, leverageProgramId])
 
   const handleRepay = useCallback(async () => {
     try {
       if (!wallet || !wallet.publicKey) {
-        console.error("Wallet or wallet.publicKey is undefined.");
+        toast.error("Please connect your wallet.");
         return;
       }
+
+      if (!amount || !tokenAddress) {
+        toast.error("Please enter an amount and select a token.");
+        return;
+      }
+      setLoadingRepay(true);
       const program = new Program(leverageIdl, provider);
       const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer()], leverageProgramId);
 
       if (tokenAddress === "SOL") {
-        const repay_tx = await program.methods.repay(new BN(amount * (10**9)))
-        .accounts({
-          user: wallet.publicKey,
-          leverageAccount: new PublicKey(leverage_public_key),
-          userBalance: new PublicKey(pda[0]),
-          tokenProgram: null,
-          tokenMint: null,
-          vaultTokenAccount: null,
-          userTokenAccount: null,
-          systemProgram: solanaWeb3.SystemProgram.programId,
-        })
-        .rpc();
+        const repay_tx = await program.methods.repay(new BN(amount * (10 ** 9)))
+          .accounts({
+            user: wallet.publicKey,
+            leverageAccount: new PublicKey(leverage_public_key),
+            userBalance: new PublicKey(pda[0]),
+            tokenProgram: null,
+            tokenMint: null,
+            vaultTokenAccount: null,
+            userTokenAccount: null,
+            systemProgram: solanaWeb3.SystemProgram.programId,
+          })
+          .rpc();
       }
       else if (tokenAddress === "USDC") {
-        const repay_tx = await program.methods.repay(new BN(amount * (10**9)))
-        .accounts({
-          user: wallet.publicKey,
-          leverageAccount: levrageAccount.publicKey,
-          userBalance: new PublicKey(pda[0]),
-          tokenMint: mintKeypair.publicKey,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount'))),
-          vaultTokenAccount: new PublicKey(vault_token_ATA),
-          systemProgram: solanaWeb3.SystemProgram.programId,
-        })
-        .rpc();
+        const repay_tx = await program.methods.repay(new BN(amount * (10 ** 9)))
+          .accounts({
+            user: wallet.publicKey,
+            leverageAccount: levrageAccount.publicKey,
+            userBalance: new PublicKey(pda[0]),
+            tokenMint: mintKeypair.publicKey,
+            tokenProgram: TOKEN_PROGRAM_ID,
+            userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount'))),
+            vaultTokenAccount: new PublicKey(vault_token_ATA),
+            systemProgram: solanaWeb3.SystemProgram.programId,
+          })
+          .rpc();
       }
-      else {throw new Error("Invalid token address")}
+      else { throw new Error("Invalid token address") }
 
+      await handleGetBalance();
     } catch (error) {
+      toast.error(error.message)
       throw error;
+    } finally {
+      setLoadingRepay(false);
+      setAmount(null)
+      setTokenAddress(null)
     }
   }, [wallet, leverageProgramId])
 
-  // const handleWithdrawToken = useCallback(async () => {
-  //   try {
-  //     if (!wallet || !wallet.publicKey) {
-  //       console.error("Wallet or wallet.publicKey is undefined.");
-  //       return;
-  //     }
-  //     const program = new Program(leverageIdl, provider);
-  //     const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer()], leverageProgramId);
-
-  //     const deposit_tx = await program.methods.withdraw(new BN(100))
-  //       .accounts({
-  //         user: wallet.publicKey,
-  //         leverageAccount: levrageAccount.publicKey,
-  //         userBalance: new PublicKey(pda[0]),
-  //         tokenMint: mintKeypair.publicKey,
-  //         tokenProgram: TOKEN_PROGRAM_ID,
-  //         userTokenAccount: new PublicKey(user_token_ATA),
-  //         vaultTokenAccount: new PublicKey(vault_token_ATA),
-  //         systemProgram: solanaWeb3.SystemProgram.programId,
-  //       })
-  //       .rpc();
-
-  //   } catch (error) {
-  //     console.log("error::::", error)
-  //   }
-  // }, [wallet, leverageProgramId])
-
-  // const handleBorrowToken = useCallback(async () => {
-  //   try {
-  //     if (!wallet || !wallet.publicKey) {
-  //       console.error("Wallet or wallet.publicKey is undefined.");
-  //       return;
-  //     }
-  //     const program = new Program(leverageIdl, provider);
-  //     const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer()], leverageProgramId);
-
-  //     const borrow_tx = await program.methods.borrow(new BN(100))
-  //       .accounts({
-  //         user: wallet.publicKey,
-  //         leverageAccount: levrageAccount.publicKey,
-  //         userBalance: new PublicKey(pda[0]),
-  //         tokenMint: mintKeypair.publicKey,
-  //         tokenProgram: TOKEN_PROGRAM_ID,
-  //         userTokenAccount: new PublicKey(user_token_ATA),
-  //         vaultTokenAccount: new PublicKey(vault_token_ATA),
-  //         systemProgram: solanaWeb3.SystemProgram.programId,
-  //       })
-  //       .rpc();
-
-  //       console.log(borrow_tx)
-  //   } catch (error) {
-  //     console.log("error::::", error)
-  //   }
-  // }, [wallet, leverageProgramId])
-
-  // const handleRepayToken = useCallback(async () => {
-  //   try {
-  //     if (!wallet || !wallet.publicKey) {
-  //       console.error("Wallet or wallet.publicKey is undefined.");
-  //       return;
-  //     }
-  //     const program = new Program(leverageIdl, provider);
-  //     const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer()], leverageProgramId);
-
-  //     const repay_tx = await program.methods.repay(new BN(100))
-  //       .accounts({
-  //         user: wallet.publicKey,
-  //         leverageAccount: levrageAccount.publicKey,
-  //         userBalance: new PublicKey(pda[0]),
-  //         tokenMint: mintKeypair.publicKey,
-  //         tokenProgram: TOKEN_PROGRAM_ID,
-  //         userTokenAccount: new PublicKey(user_token_ATA),
-  //         vaultTokenAccount: new PublicKey(vault_token_ATA),
-  //         systemProgram: solanaWeb3.SystemProgram.programId,
-  //       })
-  //       .rpc();
-
-  //     console.log(repay_tx)
-
-  //   } catch (error) {
-  //     console.log("error::::", error)
-  //   }
-  // }, [wallet, leverageProgramId])
 
   return (
     <div className="flex flex-col h-fit bg-grey-900[0.4] text-gray-100 w-[400px]">
       <div className="w-full max-w-md mx-auto space-y-4 p-6 rounded-lg">
-        <button onClick={handleGetUsdc} className={`bg-[#2550C0]/[0.21] w-full py-4 rounded-lg border`}>Get USDC</button>
+        <button onClick={handleGetUsdc} className={`bg-[#2550C0]/[0.21] w-full py-4 rounded-lg border border-gray-700`} disabled={loadingGetUsdc}>{loadingGetUsdc ? "Processing..." : "Get USDC"}</button>
         <div
           className={`bg-[#2550C0]/[0.21] w-full py-4 rounded-lg border ${activeForm === "deposit" ? "border-blue-500" : "border-gray-700"
             }`}
-        onClick={() => handleButtonClick("deposit")}
+          onClick={() => handleButtonClick("deposit")}
         >
           <p className="text-center">Deposit</p>
           <div
@@ -835,19 +720,21 @@ console.log(mintKeypair.publicKey.toString())
                 />
                 <button
                   className="mt-4 px-4 py-2 bg-blue-600 rounded-lg w-full"
-                onClick={handleDeposit}
+                  onClick={handleDeposit}
+                  disabled={loadingDeposit}
                 >
-                  Submit
+                  {loadingDeposit ? "Processing..." : "Submit Deposit"}
                 </button>
               </div>
             )}
           </div>
         </div>
-       
+
         <div
-          className={`bg-[#2550C0]/[0.21]et w-full py-4 rounded-lg border ${activeForm === "withdraw" ? "border-blue-500" : "border-gray-700"
+          className={`bg-[#2550C0]/[0.21] w-full py-4 rounded-lg border ${activeForm === "withdraw" ? "border-blue-500" : "border-gray-700"
             }`}
-        onClick={() => handleButtonClick("withdraw")}
+          onClick={() => handleButtonClick("withdraw")}
+          disabled={loadingWithdraw}
         >
           <p className="text-center">Withdraw</p>
           <div
@@ -867,9 +754,10 @@ console.log(mintKeypair.publicKey.toString())
                 />
                 <button
                   className="mt-4 px-4 py-2 bg-blue-600 rounded-lg w-full"
-                onClick={handleWithdraw}
+                  onClick={handleWithdraw}
+                  disabled={loadingWithdraw}
                 >
-                  Submit
+                  {loadingWithdraw ? "Processing..." : "Submit Withdraw"}
                 </button>
               </div>
             )}
@@ -878,7 +766,8 @@ console.log(mintKeypair.publicKey.toString())
         <div
           className={`bg-[#2550C0]/[0.21] w-full py-4 rounded-lg border ${activeForm === "borrow" ? "border-blue-500" : "border-gray-700"
             }`}
-        onClick={() => handleButtonClick("borrow")}
+          onClick={() => handleButtonClick("borrow")}
+          disabled={loadingBorrow}
         >
           <p className="text-center">Borrow</p>
           <div
@@ -898,9 +787,10 @@ console.log(mintKeypair.publicKey.toString())
                 />
                 <button
                   className="mt-4 px-4 py-2 bg-blue-600 rounded-lg w-full"
-                onClick={handleBorrow}
+                  onClick={handleBorrow}
+                  disabled={loadingBorrow}
                 >
-                  Submit
+                  {loadingBorrow ? "Processing..." : "Submit Borrow"}
                 </button>
               </div>
             )}
@@ -909,7 +799,8 @@ console.log(mintKeypair.publicKey.toString())
         <div
           className={`bg-[#2550C0]/[0.21] w-full py-4 rounded-lg border ${activeForm === "repay" ? "border-blue-500" : "border-gray-700"
             }`}
-        onClick={() => handleButtonClick("repay")}
+          onClick={() => handleButtonClick("repay")}
+          disabled={loadingRepay}
         >
           <p className="text-center">Repay</p>
           <div
@@ -929,9 +820,10 @@ console.log(mintKeypair.publicKey.toString())
                 />
                 <button
                   className="mt-4 px-4 py-2 bg-blue-600 rounded-lg w-full"
-                onClick={handleRepay}
+                  onClick={handleRepay}
+                  disabled={loadingRepay}
                 >
-                  Submit
+                  {loadingRepay ? "Processing..." : "Submit Repay"}
                 </button>
               </div>
             )}

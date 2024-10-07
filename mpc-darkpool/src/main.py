@@ -20,12 +20,6 @@ from eth_account import Account
 from datetime import datetime
 import requests
 
-# cosmwasm 
-from cosmpy.aerial.wallet import LocalWallet
-from cosmpy.crypto.keypairs import PrivateKey
-from cosmpy.aerial.contract import LedgerContract
-from cosmpy.aerial.client import LedgerClient, NetworkConfig, Address
-
 app = FastAPI()
 
 origins = [
@@ -192,17 +186,20 @@ async def setup():
 
 @app.post("/add_order")
 async def add_order(order: Order):
+    print("entering")
     # headers = {
     #     "X-CMC_PRO_API_KEY": "99e8b7ac-34a8-4b56-9ac3-a00ce4165050"
     # }
     
     # response = requests.get('https://pro-api.coinmarketcap.com/v1/tools/price-conversion?symbol=USDC&amount=10&convert=OSMO', headers=headers)
     # print((response.json()['data']['quote']['OSMO']['price']))
-    
-    orders = load_orders()
-    orders.append(order.dict())
-    save_orders(orders)
-    return {"message": "Order added successfully"}
+    try:
+        orders = load_orders()
+        orders.append(order.dict())
+        save_orders(orders)
+        return {"message": "Order added successfully"}
+    except Exception as e:
+        print(e)
 
 async def sum_encrypted_values(orders):
     distributed_schemes = app.distribute_scema
