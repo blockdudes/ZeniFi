@@ -1,0 +1,202 @@
+$ next start -p 9003
+  ▲ Next.js 14.2.3
+  - Local:        http://localhost:9003
+
+ ✓ Starting...
+ ✓ Ready in 407ms
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}
+6d19c1ab21d200ceb33c489a9b6f1854
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined.
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61599)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61546)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546)
+    at nB (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67538)
+    at nD (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:66680)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64853)
+    at nM (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61156)
+    at nN (/root/code/lunex/client/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64546) {
+  digest: '1226977803'
+}

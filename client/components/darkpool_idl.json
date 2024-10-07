@@ -1,0 +1,1091 @@
+{
+    "address": "5FPrCjrhxkfm8dR79gPrCfYVYuJ7iUdpdZLLUMtZUwXR",
+    "metadata": {
+      "name": "darkpool_solana",
+      "version": "0.1.0",
+      "spec": "0.1.0",
+      "description": "Created with Anchor"
+    },
+    "instructions": [
+      {
+        "name": "borrow",
+        "discriminator": [
+          228,
+          253,
+          131,
+          202,
+          207,
+          116,
+          89,
+          18
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "user_balance",
+            "writable": true
+          },
+          {
+            "name": "leverage_account"
+          },
+          {
+            "name": "token_program",
+            "optional": true,
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          },
+          {
+            "name": "token_mint",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "vault_token_account",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "user_token_account",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "burn",
+        "discriminator": [
+          116,
+          110,
+          29,
+          56,
+          107,
+          219,
+          42,
+          93
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "user_balance",
+            "writable": true
+          },
+          {
+            "name": "leverage_account"
+          },
+          {
+            "name": "token_program",
+            "optional": true,
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          },
+          {
+            "name": "token_mint",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "vault_token_account",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "user_token_account",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "deposit",
+        "discriminator": [
+          242,
+          35,
+          198,
+          137,
+          82,
+          225,
+          242,
+          182
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "leverage_account",
+            "writable": true
+          },
+          {
+            "name": "user_balance",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    117,
+                    115,
+                    101,
+                    114,
+                    95,
+                    98,
+                    97,
+                    108,
+                    97,
+                    110,
+                    99,
+                    101
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "user"
+                }
+              ]
+            }
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "deposit_erc20",
+        "discriminator": [
+          22,
+          2,
+          82,
+          3,
+          29,
+          137,
+          71,
+          85
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "leverage_account",
+            "writable": true
+          },
+          {
+            "name": "user_token_account",
+            "writable": true
+          },
+          {
+            "name": "vault_token_account",
+            "writable": true
+          },
+          {
+            "name": "token_mint"
+          },
+          {
+            "name": "user_balance",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    117,
+                    115,
+                    101,
+                    114,
+                    95,
+                    98,
+                    97,
+                    108,
+                    97,
+                    110,
+                    99,
+                    101
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "user"
+                }
+              ]
+            }
+          },
+          {
+            "name": "token_program",
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "get_user_balance",
+        "discriminator": [
+          244,
+          189,
+          220,
+          239,
+          164,
+          70,
+          32,
+          235
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "user_balance",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    117,
+                    115,
+                    101,
+                    114,
+                    95,
+                    98,
+                    97,
+                    108,
+                    97,
+                    110,
+                    99,
+                    101
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "user"
+                }
+              ]
+            }
+          }
+        ],
+        "args": [],
+        "returns": {
+          "defined": {
+            "name": "UserBalanceInfo"
+          }
+        }
+      },
+      {
+        "name": "get_user_order_state",
+        "discriminator": [
+          210,
+          24,
+          180,
+          56,
+          244,
+          110,
+          243,
+          25
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "signer": true
+          },
+          {
+            "name": "user_order_state"
+          }
+        ],
+        "args": [],
+        "returns": {
+          "vec": {
+            "defined": {
+              "name": "OrderState"
+            }
+          }
+        }
+      },
+      {
+        "name": "initialize",
+        "discriminator": [
+          175,
+          175,
+          109,
+          31,
+          13,
+          152,
+          155,
+          237
+        ],
+        "accounts": [
+          {
+            "name": "leverage_account",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "owner",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          }
+        ],
+        "args": [
+          {
+            "name": "token_mint",
+            "type": "pubkey"
+          }
+        ]
+      },
+      {
+        "name": "order_execute",
+        "discriminator": [
+          49,
+          164,
+          152,
+          194,
+          50,
+          115,
+          73,
+          153
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "token_in"
+          },
+          {
+            "name": "token_out"
+          },
+          {
+            "name": "user_balance",
+            "writable": true
+          },
+          {
+            "name": "user_order_state",
+            "writable": true
+          },
+          {
+            "name": "leverage_account",
+            "writable": true
+          },
+          {
+            "name": "token_program",
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          },
+          {
+            "name": "vault_token_in_account",
+            "writable": true
+          },
+          {
+            "name": "vault_token_out_account",
+            "writable": true
+          }
+        ],
+        "args": [
+          {
+            "name": "order_id",
+            "type": "string"
+          },
+          {
+            "name": "amount_in",
+            "type": "u64"
+          },
+          {
+            "name": "amount_out",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "repay",
+        "discriminator": [
+          234,
+          103,
+          67,
+          82,
+          208,
+          234,
+          219,
+          166
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "user_balance",
+            "writable": true
+          },
+          {
+            "name": "leverage_account"
+          },
+          {
+            "name": "token_program",
+            "optional": true,
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          },
+          {
+            "name": "token_mint",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "vault_token_account",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "user_token_account",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "token_list",
+        "discriminator": [
+          220,
+          10,
+          14,
+          39,
+          221,
+          229,
+          85,
+          120
+        ],
+        "accounts": [
+          {
+            "name": "leverage_account",
+            "writable": true
+          },
+          {
+            "name": "owner",
+            "signer": true,
+            "relations": [
+              "leverage_account"
+            ]
+          }
+        ],
+        "args": [
+          {
+            "name": "token_mint",
+            "type": "pubkey"
+          }
+        ]
+      },
+      {
+        "name": "withdraw",
+        "discriminator": [
+          183,
+          18,
+          70,
+          156,
+          148,
+          109,
+          161,
+          34
+        ],
+        "accounts": [
+          {
+            "name": "user",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "user_balance",
+            "writable": true
+          },
+          {
+            "name": "leverage_account",
+            "writable": true
+          },
+          {
+            "name": "token_program",
+            "optional": true,
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          },
+          {
+            "name": "token_mint",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "vault_token_account",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "user_token_account",
+            "writable": true,
+            "optional": true
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          }
+        ],
+        "args": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    ],
+    "accounts": [
+      {
+        "name": "LeverageAccount",
+        "discriminator": [
+          2,
+          191,
+          209,
+          98,
+          12,
+          50,
+          209,
+          11
+        ]
+      },
+      {
+        "name": "UserBalance",
+        "discriminator": [
+          187,
+          237,
+          208,
+          146,
+          86,
+          132,
+          29,
+          191
+        ]
+      },
+      {
+        "name": "UserOrderState",
+        "discriminator": [
+          187,
+          158,
+          144,
+          149,
+          24,
+          147,
+          108,
+          203
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "OrderExecuted",
+        "discriminator": [
+          74,
+          135,
+          231,
+          5,
+          168,
+          106,
+          194,
+          117
+        ]
+      },
+      {
+        "name": "TokenDeposit",
+        "discriminator": [
+          89,
+          129,
+          150,
+          89,
+          215,
+          240,
+          244,
+          69
+        ]
+      },
+      {
+        "name": "TokenEdit",
+        "discriminator": [
+          33,
+          123,
+          31,
+          73,
+          238,
+          155,
+          122,
+          61
+        ]
+      },
+      {
+        "name": "TokenListUpdate",
+        "discriminator": [
+          60,
+          87,
+          99,
+          244,
+          225,
+          219,
+          157,
+          132
+        ]
+      },
+      {
+        "name": "TokenOrder",
+        "discriminator": [
+          229,
+          195,
+          64,
+          113,
+          30,
+          64,
+          213,
+          67
+        ]
+      }
+    ],
+    "errors": [
+      {
+        "code": 6000,
+        "name": "OnlyOwner",
+        "msg": "Only the owner can perform this action"
+      },
+      {
+        "code": 6001,
+        "name": "ValueShouldBeGreaterThanZero",
+        "msg": "Value should be greater than zero"
+      },
+      {
+        "code": 6002,
+        "name": "TokenNotListed",
+        "msg": "Token not listed"
+      },
+      {
+        "code": 6003,
+        "name": "InsufficientLeverage",
+        "msg": "Insufficient leverage balance"
+      },
+      {
+        "code": 6004,
+        "name": "InsufficientBalance",
+        "msg": "Insufficient balance"
+      },
+      {
+        "code": 6005,
+        "name": "BorrowBalanceError",
+        "msg": "Borrow balance error"
+      },
+      {
+        "code": 6006,
+        "name": "TokenBalanceNotFound",
+        "msg": "Token balance not found"
+      },
+      {
+        "code": 6007,
+        "name": "TokenProgramMissing",
+        "msg": "Token program is missing"
+      },
+      {
+        "code": 6008,
+        "name": "VaultTokenAccountMissing",
+        "msg": "Vault token account is missing"
+      },
+      {
+        "code": 6009,
+        "name": "UserTokenAccountMissing",
+        "msg": "User token account is missing"
+      },
+      {
+        "code": 6010,
+        "name": "InvalidToken",
+        "msg": "This token is not found"
+      },
+      {
+        "code": 6011,
+        "name": "InsufficientBorrowBalance",
+        "msg": "Insufficient borrow balance"
+      },
+      {
+        "code": 6012,
+        "name": "BorrowBalanceNotZero",
+        "msg": "Borrow balance must be zero to burn"
+      },
+      {
+        "code": 6013,
+        "name": "InsufficientUserBorrowBalance",
+        "msg": "Insufficient user borrow balance"
+      },
+      {
+        "code": 6014,
+        "name": "InsufficientTokenBalance",
+        "msg": "Insufficient token balance"
+      },
+      {
+        "code": 6015,
+        "name": "OrderNotFound",
+        "msg": "Order not found or not in pending status"
+      },
+      {
+        "code": 6016,
+        "name": "AmountMismatch",
+        "msg": "Amount mismatch with the original order"
+      }
+    ],
+    "types": [
+      {
+        "name": "LeverageAccount",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "owner",
+              "type": "pubkey"
+            },
+            {
+              "name": "native_mint",
+              "type": "pubkey"
+            },
+            {
+              "name": "listed_tokens",
+              "type": {
+                "vec": "pubkey"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "OrderExecuted",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "user",
+              "type": "pubkey"
+            },
+            {
+              "name": "order_id",
+              "type": "string"
+            },
+            {
+              "name": "token_in",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_out",
+              "type": "pubkey"
+            },
+            {
+              "name": "amount_in",
+              "type": "u64"
+            },
+            {
+              "name": "amount_out",
+              "type": "u64"
+            }
+          ]
+        }
+      },
+      {
+        "name": "OrderState",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "order_id",
+              "type": "string"
+            },
+            {
+              "name": "sell_token",
+              "type": "pubkey"
+            },
+            {
+              "name": "buy_token",
+              "type": "pubkey"
+            },
+            {
+              "name": "sell_token_amount",
+              "type": "u64"
+            },
+            {
+              "name": "buy_token_amount",
+              "type": "u64"
+            },
+            {
+              "name": "timestamp",
+              "type": "i64"
+            },
+            {
+              "name": "status",
+              "type": {
+                "defined": {
+                  "name": "OrderStatus"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "OrderStatus",
+        "type": {
+          "kind": "enum",
+          "variants": [
+            {
+              "name": "Pending"
+            },
+            {
+              "name": "Fulfilled"
+            },
+            {
+              "name": "Cancelled"
+            }
+          ]
+        }
+      },
+      {
+        "name": "TokenBalance",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "token_mint",
+              "type": "pubkey"
+            },
+            {
+              "name": "deposit_token_balance",
+              "type": "u64"
+            },
+            {
+              "name": "leverage_token_balance",
+              "type": "u64"
+            },
+            {
+              "name": "borrow_token_balance",
+              "type": "u64"
+            },
+            {
+              "name": "user_token_balance",
+              "type": "u64"
+            }
+          ]
+        }
+      },
+      {
+        "name": "TokenDeposit",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "depositor",
+              "type": "pubkey"
+            },
+            {
+              "name": "token",
+              "type": "pubkey"
+            },
+            {
+              "name": "deposit_token_balance",
+              "type": "u64"
+            },
+            {
+              "name": "leverage_token_balance",
+              "type": "u64"
+            },
+            {
+              "name": "is_native",
+              "type": "bool"
+            }
+          ]
+        }
+      },
+      {
+        "name": "TokenEdit",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "account",
+              "type": "pubkey"
+            },
+            {
+              "name": "token",
+              "type": "pubkey"
+            },
+            {
+              "name": "amount",
+              "type": "u64"
+            },
+            {
+              "name": "func",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      {
+        "name": "TokenListUpdate",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "owner",
+              "type": "pubkey"
+            },
+            {
+              "name": "listed_token",
+              "type": "pubkey"
+            }
+          ]
+        }
+      },
+      {
+        "name": "TokenOrder",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "user",
+              "type": "pubkey"
+            },
+            {
+              "name": "order",
+              "type": {
+                "defined": {
+                  "name": "OrderState"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "UserBalance",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "native_balance",
+              "type": {
+                "defined": {
+                  "name": "TokenBalance"
+                }
+              }
+            },
+            {
+              "name": "fungible_balance",
+              "type": {
+                "defined": {
+                  "name": "TokenBalance"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "UserBalanceInfo",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "native_balance",
+              "type": {
+                "defined": {
+                  "name": "TokenBalance"
+                }
+              }
+            },
+            {
+              "name": "fungible_balance",
+              "type": {
+                "defined": {
+                  "name": "TokenBalance"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "UserOrderState",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "user",
+              "type": "pubkey"
+            },
+            {
+              "name": "orders",
+              "type": {
+                "vec": {
+                  "defined": {
+                    "name": "OrderState"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
