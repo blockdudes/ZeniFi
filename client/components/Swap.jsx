@@ -39,7 +39,7 @@ const Swap = ({ onOrderCreated }) => {
   const user_asset = useSelector(state => state.userDataInteract);
   const dispatch = useDispatch();
   const wallet = useAnchorWallet()
-  const { signMessage} = useWallet()
+  const { signMessage } = useWallet()
 
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Swap = ({ onOrderCreated }) => {
   }, [firstToken, secondToken, amount, user_asset]);
 
   useEffect(() => {
-    const handleGetBalance = async() => {
+    const handleGetBalance = async () => {
       try {
         if (!wallet || !wallet.publicKey) {
           console.error("Wallet or wallet.publicKey is undefined.");
@@ -62,15 +62,15 @@ const Swap = ({ onOrderCreated }) => {
         const provider = new AnchorProvider(connection, wallet, { commitment: "confirmed" })
         const new_program = new Program(leverageIdl, provider);
         const pda = PublicKey.findProgramAddressSync([Buffer.from("user_balance"), wallet.publicKey.toBuffer()], leverageProgramId);
-  
+
         const userBalance = await new_program.account.userBalance.fetch(new PublicKey(pda[0]));
-        dispatch(addBalance({native: userBalance.nativeBalance, fungible: userBalance.fungibleBalance}))
+        dispatch(addBalance({ native: userBalance.nativeBalance, fungible: userBalance.fungibleBalance }))
       } catch (error) {
         console.log(error)
       }
     }
     handleGetBalance()
-  }, [ wallet, firstToken, secondToken])
+  }, [wallet, firstToken, secondToken])
 
 
   const fetchRate = async (sellToken, buyToken) => {
@@ -145,9 +145,9 @@ const Swap = ({ onOrderCreated }) => {
           }
         }
 
-      //  await wallet.signTransaction({
-      //     message: JSON.stringify(message)
-      //   })
+        //  await wallet.signTransaction({
+        //     message: JSON.stringify(message)
+        //   })
 
         // const connection = new solanaWeb3.Connection(clusterApiUrl("devnet"), "confirmed");
         // const provider = new AnchorProvider(connection, wallet, { commitment: "confirmed" })
@@ -158,8 +158,8 @@ const Swap = ({ onOrderCreated }) => {
         // });
 
         const encoder = new TextEncoder();
-        await signMessage(encoder.encode(message));        
-        // await axios.post('https://mpc_darkpool.dev.blockdudes.com/add_order', new_order);
+        await signMessage(encoder.encode(message));
+        await axios.post('https://mpc.dev.blockdudes.com/add_order', new_order);
 
         const created_order = {
           orderId: orderId,
@@ -183,8 +183,8 @@ const Swap = ({ onOrderCreated }) => {
       toast.error("Something went wrong!");
     }
   };
-  console.log('first',firstToken)
-  console.log('sec',secondToken)
+  console.log('first', firstToken)
+  console.log('sec', secondToken)
 
   const handleSwapTokens = () => {
     const tempToken = firstToken;

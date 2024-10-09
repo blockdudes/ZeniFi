@@ -1,0 +1,35 @@
+INFO:     Will watch for changes in these directories: ['/root/code/soldex/mpc-darkpool']
+INFO:     Started server process [843878]
+INFO:     Waiting for application startup.
+ERROR:    Traceback (most recent call last):
+  File "/root/code/soldex/mpc-darkpool/myenv/lib/python3.11/site-packages/starlette/routing.py", line 732, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+  File "/usr/lib/python3.11/contextlib.py", line 204, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/code/soldex/mpc-darkpool/src/main.py", line 528, in lifespan
+    app.distribute_scema = await setup()
+                           ^^^^^^^^^^^^^
+  File "/root/code/soldex/mpc-darkpool/src/main.py", line 175, in setup
+    await asyncio.gather(
+  File "/root/code/soldex/mpc-darkpool/src/main.py", line 122, in setup_distributed_scheme
+    with open(f"store/{party_number}.pkl",'rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'store/0.pkl'
+
+ERROR:    Application startup failed. Exiting.
+2024-10-07 16:43:44,631 - tno.mpc.communication.httphandlers - INFO - Serving on 0.0.0.0:8900
+2024-10-07 16:43:44,631 - tno.mpc.communication.httphandlers - INFO - Serving on 0.0.0.0:8901
+2024-10-07 16:43:44,631 - tno.mpc.communication.httphandlers - INFO - Serving on 0.0.0.0:8902
+2024-10-07 16:43:44,702 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f80bf287990>
+2024-10-07 16:43:44,702 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f80bf287bd0>
+2024-10-07 16:43:44,702 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f80bf098810>
+2024-10-07 16:43:44,702 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f80bf098bd0>
+2024-10-07 16:43:44,702 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f80bf2869d0>
+2024-10-07 16:43:44,702 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f80bf252f90>

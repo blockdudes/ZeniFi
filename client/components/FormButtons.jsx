@@ -121,7 +121,7 @@ const FormButtons = () => {
     try {
 
       if (!wallet || !wallet.publicKey) {
-        console.error("Wallet or wallet.publicKey is undefined.");
+        toast.error("Please Connect your wallet");
         return;
       }
       setLoadingGetUsdc(true);
@@ -129,9 +129,8 @@ const FormButtons = () => {
       const newMintKeypair = new solanaWeb3.Keypair();
       console.log(mintKeypair, newMintKeypair)
 
-      let localUserTokenAccount = localStorage.getItem('userTokenAccount') && new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount')))
+      let localUserTokenAccount = localStorage.getItem(wallet.publicKey.toString()) && new PublicKey(JSON.parse(localStorage.getItem(wallet.publicKey.toString())))
       if (!localUserTokenAccount) {
-
 
         // const mintRent = await connection.getMinimumBalanceForRentExemption(MINT_SIZE);
         // const createMintInfoIx = web3.SystemProgram.createAccount({
@@ -171,7 +170,7 @@ const FormButtons = () => {
         const signer = await provider.sendAndConfirm(tx)
 
         localUserTokenAccount = userTokenAccount;
-        localStorage.setItem('userTokenAccount', JSON.stringify(userTokenAccount))
+        localStorage.setItem(wallet.publicKey.toString(), JSON.stringify(userTokenAccount))
       }
 
       // console.log("minting")
@@ -185,6 +184,8 @@ const FormButtons = () => {
         })
         .signers([keypair])
         .rpc();
+
+        toast.success("Minted Successfully");
 
     } catch (error) {
       toast.error(error.message)
@@ -451,7 +452,7 @@ const FormButtons = () => {
       }
       else if (tokenAddress === "USDC") {
 
-        let localUserTokenAccount = localStorage.getItem('userTokenAccount') && new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount')))
+        let localUserTokenAccount = localStorage.getItem(wallet.publicKey.toString()) && new PublicKey(JSON.parse(localStorage.getItem(wallet.publicKey.toString())))
         if (!localUserTokenAccount) {
 
           console.log(object)
@@ -495,7 +496,7 @@ const FormButtons = () => {
           const send = await provider.sendAndConfirm(tx, [mintKeypair])
 
           localUserTokenAccount = userTokenAccount;
-          localStorage.setItem('userTokenAccount', JSON.stringify(userTokenAccount))
+          localStorage.setItem(wallet.publicKey.toString(), JSON.stringify(userTokenAccount))
         }
 
         const deposit_tx = await program.methods.depositErc20(new BN(amount * (10 ** 9)))
@@ -515,13 +516,14 @@ const FormButtons = () => {
         throw new Error("Invalid token address");
       }
       await handleGetBalance();
+      toast.success("Deposited Successfully");
     } catch (error) {
       toast.error(error.message)
       throw error;
     } finally {
       setLoadingDeposit(false);
       setAmount(null)
-    setTokenAddress(null)
+      setTokenAddress(null)
     }
   }, [wallet, programId]);
 
@@ -563,13 +565,14 @@ const FormButtons = () => {
             userBalance: new PublicKey(pda[0]),
             tokenMint: mintKeypair.publicKey,
             tokenProgram: TOKEN_PROGRAM_ID,
-            userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount'))),
+            userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem(wallet.publicKey.toString()))),
             vaultTokenAccount: new PublicKey(vault_token_ATA),
             systemProgram: solanaWeb3.SystemProgram.programId,
           })
           .rpc();
       }
       else { throw new Error("Invalid token address") }
+      toast.success("Withdrawed Successfully");
       await handleGetBalance();
     } catch (error) {
       toast.error(error.message)
@@ -618,13 +621,14 @@ const FormButtons = () => {
             userBalance: new PublicKey(pda[0]),
             tokenMint: mintKeypair.publicKey,
             tokenProgram: TOKEN_PROGRAM_ID,
-            userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount'))),
+            userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem(wallet.publicKey.toString()))),
             vaultTokenAccount: new PublicKey(vault_token_ATA),
             systemProgram: solanaWeb3.SystemProgram.programId,
           })
           .rpc();
       }
       else { throw new Error("Invalid token address") }
+      toast.success("Borrowed Successfully");
       await handleGetBalance();
     } catch (error) {
       toast.error(error.message)
@@ -673,14 +677,14 @@ const FormButtons = () => {
             userBalance: new PublicKey(pda[0]),
             tokenMint: mintKeypair.publicKey,
             tokenProgram: TOKEN_PROGRAM_ID,
-            userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem('userTokenAccount'))),
+            userTokenAccount: new PublicKey(JSON.parse(localStorage.getItem(wallet.publicKey.toString()))),
             vaultTokenAccount: new PublicKey(vault_token_ATA),
             systemProgram: solanaWeb3.SystemProgram.programId,
           })
           .rpc();
       }
       else { throw new Error("Invalid token address") }
-
+      toast.success("Repayed Successfully");
       await handleGetBalance();
     } catch (error) {
       toast.error(error.message)

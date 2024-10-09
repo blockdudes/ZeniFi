@@ -18,7 +18,7 @@ const Header = () => {
         <div className="pt-4 px-4 flex items-center justify-between fixed w-full shadow-sm z-20">
             <div>
                 <Link href="/dashboard">
-                    <h1 className="text-3xl font-bold px-5"><span className='text-yellow-400'>Lunex</span></h1>
+                    <h1 className="text-3xl font-bold px-5"><span className='text-yellow-400'>ZeniFi</span></h1>
                 </Link>
             </div>
             <div className='flex justify-center'>

@@ -46,7 +46,7 @@ NR_PARTIES = 3
 
 # Application-wide configuration object
 app.config = {
-    'ORDERS_FILE': 'store/orders.json',
+    'ORDERS_FILE': './store/orders.json',
     'PRIVATE_KEY': "b0104cc3ae940f18c66addbb6076c5f98d1c0f350cc2fe0c1b585e66b7ec498b",
     'KEY_LENGTH': 128,
     'PRIME_THRESHOLD': 2000,
@@ -119,7 +119,7 @@ def load_contract_abi():
         raise HTTPException(status_code=500, detail="Error decoding ABI file")
 
 async def setup_distributed_scheme(party_number, pool) -> DistributedPaillier:
-    with open(f"store/{party_number}.pkl",'rb') as f:
+    with open(f"./store/{party_number}.pkl",'rb') as f:
         data = pickle.load(f)
     paillier_public_key = PaillierPublicKey.deserialize(data['paillier']['pubkey'])
     paillier_shared_key = PaillierSharedKey.deserialize(data['paillier']['seckey'])
